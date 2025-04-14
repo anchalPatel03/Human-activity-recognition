@@ -12,13 +12,13 @@ from sklearn.metrics import confusion_matrix
 st.set_page_config(page_title="HAR for Elderly", layout="centered")
 
 # Title with bigger logo
-col1, col2 = st.columns([1, 7])
+col1, col2 = st.columns([1, 6])
 with col1:
-    st.image("logo.png", width=150)  # Increased width for better visibility
+    st.image("logo.png", width=180)  # Increased logo size
 with col2:
     st.markdown(
         """
-        <h1 style='padding-top: 10px; font-size: 36px;'>
+        <h1 style='padding-top: 10px; font-size: 34px;'>
         Human Activity Recognition for Elderly Monitoring
         </h1>
         """,
