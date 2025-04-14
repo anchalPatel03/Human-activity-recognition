@@ -26,7 +26,7 @@ st.markdown(
 
 # Instructions Section
 st.markdown("""
- How to Use:
+### How to Use:
 1. **Upload Sensor Data CSV**: Click on the "Upload" button and choose your sensor data CSV file. The file should contain sensor readings such as `back_x`, `back_y`, `back_z`, `thigh_x`, `thigh_y`, and `thigh_z`.
 2. **Prediction**: After uploading, the app will automatically predict the activities of elderly individuals based on the sensor data.
 3. **Data Visualization**: View visualizations like activity distribution, confusion matrix, and more to understand the performance of the model.
@@ -104,6 +104,34 @@ if uploaded_file is not None:
     st.subheader("Activity Count Distribution")
     activity_counts = pd.Series(activity_names).value_counts()
     st.bar_chart(activity_counts)
+
+    # Visualizing Sensor Data Distributions
+    st.subheader("Sensor Data Distributions")
+    fig, axes = plt.subplots(2, 3, figsize=(12, 8))
+
+    axes[0, 0].hist(df['back_x'], bins=30, color='skyblue', edgecolor='black')
+    axes[0, 0].set_title("Back X Distribution")
+
+    axes[0, 1].hist(df['back_y'], bins=30, color='salmon', edgecolor='black')
+    axes[0, 1].set_title("Back Y Distribution")
+
+    axes[0, 2].hist(df['back_z'], bins=30, color='lightgreen', edgecolor='black')
+    axes[0, 2].set_title("Back Z Distribution")
+
+    axes[1, 0].hist(df['thigh_x'], bins=30, color='yellow', edgecolor='black')
+    axes[1, 0].set_title("Thigh X Distribution")
+
+    axes[1, 1].hist(df['thigh_y'], bins=30, color='orange', edgecolor='black')
+    axes[1, 1].set_title("Thigh Y Distribution")
+
+    axes[1, 2].hist(df['thigh_z'], bins=30, color='purple', edgecolor='black')
+    axes[1, 2].set_title("Thigh Z Distribution")
+
+    for ax in axes.flatten():
+        ax.set_xlabel('Value')
+        ax.set_ylabel('Frequency')
+
+    st.pyplot(fig)
 
     # Data Visualization: Confusion Matrix (if actual labels present)
     if 'activity_true' in df.columns:
