@@ -6,7 +6,7 @@ from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
 
 # Load model and label encoder
-model = load_model('best_model.h5')
+model = load_model('best_model (2).h5')
 with open('label_encoder.pkl', 'rb') as f:
     label_encoder = pickle.load(f)
 
