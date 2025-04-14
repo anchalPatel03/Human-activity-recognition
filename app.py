@@ -27,6 +27,17 @@ except Exception as e:
 
 st.title("Human Activity Recognition for Elderly Monitoring")
 
+# Instructions
+st.markdown("""
+**Required Columns in the CSV File:**
+- back_x
+- back_y
+- back_z
+- thigh_x
+- thigh_y
+- thigh_z
+""")
+
 # File uploader to upload the CSV file
 uploaded_file = st.file_uploader("Upload Sensor CSV File", type=["csv"])
 
@@ -55,7 +66,6 @@ if uploaded_file is not None:
     # Create sequences for prediction (ensure there are enough rows for sequences)
     sequence_length = 128
     n_samples = X_scaled.shape[0] // sequence_length
-
     if n_samples == 0:
         st.error("Not enough data to create sequences. Please upload more data.")
         st.stop()
