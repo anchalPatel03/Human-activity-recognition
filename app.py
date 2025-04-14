@@ -11,12 +11,19 @@ from sklearn.metrics import confusion_matrix
 # Streamlit page configuration
 st.set_page_config(page_title="HAR for Elderly", layout="centered")
 
-# Title with logo
-col1, col2 = st.columns([1, 6])
+# Title with bigger logo
+col1, col2 = st.columns([1, 7])
 with col1:
-    st.image("logo.png", width=60)
+    st.image("logo.png", width=100)  # Increased width for better visibility
 with col2:
-    st.markdown("<h1 style='padding-top: 15px;'>Human Activity Recognition for Elderly Monitoring</h1>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <h1 style='padding-top: 10px; font-size: 32px;'>
+        Human Activity Recognition for Elderly Monitoring
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
 
 # Load model
 try:
