@@ -11,19 +11,22 @@ from sklearn.metrics import confusion_matrix
 # Streamlit page configuration
 st.set_page_config(page_title="HAR for Elderly", layout="centered")
 
-# Title with bigger logo
-col1, col2 = st.columns([1, 6])
+# Logo at the top, taking half of the screen width
+col1, col2 = st.columns([1, 1])  # Adjust column width ratio as needed
 with col1:
-    st.image("logo.png", width=180)  # Increased logo size
+    st.image("logo.png", width=700)  # Set width to half the screen width
 with col2:
-    st.markdown(
-        """
-        <h1 style='padding-top: 10px; font-size: 34px;'>
-        Human Activity Recognition for Elderly Monitoring
-        </h1>
-        """,
-        unsafe_allow_html=True
-    )
+    st.empty()  # Empty column to balance the layout
+
+# Title below the logo
+st.markdown(
+    """
+    <h1 style='padding-top: 10px; font-size: 34px; text-align: center;'>
+    Human Activity Recognition for Elderly Monitoring
+    </h1>
+    """,
+    unsafe_allow_html=True
+)
 
 # Load model
 try:
@@ -44,12 +47,12 @@ except Exception as e:
     st.stop()
 
 # File uploader
-uploaded_file = st.file_uploader("\U0001F4C1 Upload Sensor CSV File", type=["csv"])
+uploaded_file = st.file_uploader("📁 Upload Sensor CSV File", type=["csv"])
 
 if uploaded_file is not None:
     try:
         df = pd.read_csv(uploaded_file)
-        st.write("\U0001F4CA Data Preview:", df.head())
+        st.write("📊 Data Preview:", df.head())
     except Exception as e:
         st.error(f"Error reading CSV file: {e}")
         st.stop()
@@ -70,12 +73,12 @@ if uploaded_file is not None:
     n_samples = X_scaled.shape[0] // sequence_length
 
     if n_samples == 0:
-        st.error("\u26A0\uFE0F Not enough data to create sequences. Please upload more data.")
+        st.error("⚠️ Not enough data to create sequences. Please upload more data.")
         st.stop()
 
     X_seq = X_scaled[:n_samples * sequence_length].reshape(n_samples, sequence_length, 6)
 
-    with st.spinner('\U0001F50D Making predictions...'):
+    with st.spinner('🔍 Making predictions...'):
         try:
             y_pred = model.predict(X_seq)
             pred_classes = np.argmax(y_pred, axis=1)
@@ -85,18 +88,18 @@ if uploaded_file is not None:
             st.stop()
 
     # Show predictions
-    st.success("\u2705 Prediction Completed!")
-    st.write("\U0001F575\uFE0F‍♀️ Predicted Activities:")
+    st.success("✅ Prediction Completed!")
+    st.write("🕵️‍♀️ Predicted Activities:")
     st.write(activity_names)
 
     # Activity count
     activity_counts = pd.Series(activity_names).value_counts()
-    st.write("\U0001F4C8 Activity Distribution:")
+    st.write("📈 Activity Distribution:")
     st.bar_chart(activity_counts)
 
     # Confusion matrix (if actual labels present)
     if 'activity_true' in df.columns:
-        st.write("\U0001F4CC Confusion Matrix:")
+        st.write("📌 Confusion Matrix:")
         try:
             cm = confusion_matrix(df['activity_true'][:len(pred_classes)], pred_classes)
             fig, ax = plt.subplots(figsize=(8, 6))
