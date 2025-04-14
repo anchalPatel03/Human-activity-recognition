@@ -12,7 +12,7 @@ from sklearn.metrics import confusion_matrix
 st.set_page_config(page_title="HAR for Elderly", layout="centered")
 
 # Centered logo above the title
-st.image("logo.png", width=900)  # Set the width to your desired size (e.g., 700 pixels)
+st.image("logo.png", width=850)  # Set the width to your desired size (e.g., 700 pixels)
 
 # Title centered below the logo
 st.markdown(
