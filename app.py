@@ -11,14 +11,10 @@ from sklearn.metrics import confusion_matrix
 # Streamlit page configuration
 st.set_page_config(page_title="HAR for Elderly", layout="centered")
 
-# Logo at the top, taking half of the screen width
-col1, col2 = st.columns([1, 1])  # Adjust column width ratio as needed
-with col1:
-    st.image("logo.png", width=700)  # Set width to half the screen width
-with col2:
-    st.empty()  # Empty column to balance the layout
+# Centered logo above the title
+st.image("logo.png", width=900)  # Set the width to your desired size (e.g., 700 pixels)
 
-# Title below the logo
+# Title centered below the logo
 st.markdown(
     """
     <h1 style='padding-top: 10px; font-size: 34px; text-align: center;'>
