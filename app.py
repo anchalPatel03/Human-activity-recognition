@@ -4,6 +4,9 @@ import numpy as np
 import pickle
 from tensorflow.keras.models import load_model
 from sklearn.preprocessing import StandardScaler
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix
 
 # Load the model and label encoder
 try:
@@ -12,7 +15,6 @@ except Exception as e:
     st.error(f"Error loading model: {e}")
     st.stop()
 
-# Ensure correct path for the label encoder
 try:
     with open('label_encoder.pkl', 'rb') as f:
         label_encoder = pickle.load(f)
@@ -74,3 +76,27 @@ if uploaded_file is not None:
     # Display predicted activities
     st.write("Predicted Activities:")
     st.write(activity_names)
+
+    # Show activity distribution (Optional: Bar Chart for Activity Count)
+    activity_counts = pd.Series(activity_names).value_counts()
+    st.write("Activity Distribution:")
+    st.bar_chart(activity_counts)
+
+    # Plot confusion matrix (if ground truth is available)
+    if 'activity_true' in df.columns:
+        cm = confusion_matrix(df['activity_true'], pred_classes)
+        st.write("Confusion Matrix:")
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=label_encoder.classes_, yticklabels=label_encoder.classes_)
+        ax.set_xlabel('Predicted')
+        ax.set_ylabel('True')
+        st.pyplot(fig)
+
+    # Allow users to download predicted activities as a CSV file
+    output_df = pd.DataFrame({'Predicted Activity': activity_names})
+    st.download_button(
+        label="Download Predicted Activities",
+        data=output_df.to_csv(index=False).encode('utf-8'),
+        file_name="predicted_activities.csv",
+        mime="text/csv"
+    )
