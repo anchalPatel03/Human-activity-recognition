@@ -25,20 +25,25 @@ except Exception as e:
     st.error(f"Error loading label encoder: {e}")
     st.stop()
 
+# Title for the Streamlit app
 st.title("Human Activity Recognition for Elderly Monitoring")
 
-# Instructions
+# Instructions for uploading CSV
 st.markdown("""
-**Required Columns in the CSV File:**
-- back_x
-- back_y
-- back_z
-- thigh_x
-- thigh_y
-- thigh_z
+**Instructions for Uploading CSV File:**
+1. The uploaded CSV must contain the following columns:
+    - `back_x`: X-axis data from the back sensor
+    - `back_y`: Y-axis data from the back sensor
+    - `back_z`: Z-axis data from the back sensor
+    - `thigh_x`: X-axis data from the thigh sensor
+    - `thigh_y`: Y-axis data from the thigh sensor
+    - `thigh_z`: Z-axis data from the thigh sensor
+
+2. Ensure the data is in a numeric format, with one row for each time step.
+3. If your data contains any missing values, handle them before uploading.
 """)
 
-# File uploader to upload the CSV file
+# File uploader for CSV input
 uploaded_file = st.file_uploader("Upload Sensor CSV File", type=["csv"])
 
 if uploaded_file is not None:
@@ -50,7 +55,7 @@ if uploaded_file is not None:
         st.error(f"Error reading CSV file: {e}")
         st.stop()
 
-    # Check if the necessary columns are present
+    # Check if necessary columns are present
     required_columns = ['back_x', 'back_y', 'back_z', 'thigh_x', 'thigh_y', 'thigh_z']
     missing_columns = [col for col in required_columns if col not in df.columns]
 
@@ -66,6 +71,7 @@ if uploaded_file is not None:
     # Create sequences for prediction (ensure there are enough rows for sequences)
     sequence_length = 128
     n_samples = X_scaled.shape[0] // sequence_length
+
     if n_samples == 0:
         st.error("Not enough data to create sequences. Please upload more data.")
         st.stop()
@@ -87,7 +93,7 @@ if uploaded_file is not None:
     st.write("Predicted Activities:")
     st.write(activity_names)
 
-    # Show activity distribution (Optional: Bar Chart for Activity Count)
+    # Show activity distribution (Bar Chart for Activity Count)
     activity_counts = pd.Series(activity_names).value_counts()
     st.write("Activity Distribution:")
     st.bar_chart(activity_counts)
