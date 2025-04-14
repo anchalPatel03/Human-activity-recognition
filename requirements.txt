@@ -1,7 +1,7 @@
 streamlit
-tensorflow==2.16.1
-numpy
 pandas
+numpy
+tensorflow
 scikit-learn
-matplotlib
-joblib
+pickle-mixin
+h5py
