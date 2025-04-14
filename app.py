@@ -26,7 +26,7 @@ st.markdown(
 
 # Instructions Section
 st.markdown("""
-### How to Use:
+ How to Use:
 1. **Upload Sensor Data CSV**: Click on the "Upload" button and choose your sensor data CSV file. The file should contain sensor readings such as `back_x`, `back_y`, `back_z`, `thigh_x`, `thigh_y`, and `thigh_z`.
 2. **Prediction**: After uploading, the app will automatically predict the activities of elderly individuals based on the sensor data.
 3. **Data Visualization**: View visualizations like activity distribution, confusion matrix, and more to understand the performance of the model.
@@ -34,7 +34,7 @@ st.markdown("""
 **Important Notes:**
 - Make sure your CSV file includes all the necessary columns.
 - The app will output predictions and visualizations once the file is uploaded and processed.
-""")
+""", unsafe_allow_html=True)
 
 # Load model
 try:
@@ -100,16 +100,12 @@ if uploaded_file is not None:
     st.write("🕵️‍♀️ Predicted Activities:")
     st.write(activity_names)
 
-    # Activity count
-    activity_counts = pd.Series(activity_names).value_counts()
-    st.write("📈 Activity Distribution:")
-    st.bar_chart(activity_counts)
-
-    # Data Visualization: Activity Count Plot
+    # Data Visualization: Activity count
     st.subheader("Activity Count Distribution")
+    activity_counts = pd.Series(activity_names).value_counts()
     st.bar_chart(activity_counts)
 
-    # Confusion matrix (if actual labels present)
+    # Data Visualization: Confusion Matrix (if actual labels present)
     if 'activity_true' in df.columns:
         st.write("📌 Confusion Matrix:")
         try:
