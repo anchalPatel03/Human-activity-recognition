@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section class="intro">
+    <h2>Welcome to Our Project!</h2>
+    <p>This project detects human activity using sensor data and BiLSTM-based deep learning. It's specially designed to monitor elderly movement in real time.</p>
+    <a class="button" href="{{ url_for('predict') }}">Try Prediction</a>
+</section>
+{% endblock %}
