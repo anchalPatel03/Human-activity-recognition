@@ -24,6 +24,18 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Instructions Section
+st.markdown("""
+### How to Use:
+1. **Upload Sensor Data CSV**: Click on the "Upload" button and choose your sensor data CSV file. The file should contain sensor readings such as `back_x`, `back_y`, `back_z`, `thigh_x`, `thigh_y`, and `thigh_z`.
+2. **Prediction**: After uploading, the app will automatically predict the activities of elderly individuals based on the sensor data.
+3. **Data Visualization**: View visualizations like activity distribution, confusion matrix, and more to understand the performance of the model.
+
+**Important Notes:**
+- Make sure your CSV file includes all the necessary columns.
+- The app will output predictions and visualizations once the file is uploaded and processed.
+""")
+
 # Load model
 try:
     model = load_model('best_model (2).h5')
@@ -91,6 +103,10 @@ if uploaded_file is not None:
     # Activity count
     activity_counts = pd.Series(activity_names).value_counts()
     st.write("📈 Activity Distribution:")
+    st.bar_chart(activity_counts)
+
+    # Data Visualization: Activity Count Plot
+    st.subheader("Activity Count Distribution")
     st.bar_chart(activity_counts)
 
     # Confusion matrix (if actual labels present)
