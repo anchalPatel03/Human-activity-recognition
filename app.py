@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler
 
 # Load model and label encoder
 model = load_model('best_model (2).h5')
-with open('label_encoder.pkl', 'rb') as f:
+with open('path/to/label_encoder.pkl', 'rb') as f:
     label_encoder = pickle.load(f)
 
 st.title("Human Activity Recognition for Elderly Monitoring")
